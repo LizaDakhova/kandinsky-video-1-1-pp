@@ -3,13 +3,11 @@
 <head>
   <meta charset="utf-8">
   <meta name="description"
-        content="Text-to-video generation model that demonstrates high-quality dynamics, appearance, and text alignment.">
+        content="Text-to-video generation model Kandinsky Video 1.1 that demonstrates high-quality dynamics, appearance, and text alignment.">
   <meta name="keywords" content="Text-to-Video, Kandinsky Video, Kandinsky Video 1.1">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Kandinsky Video 1.1</title>
 
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-  <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script> -->
   <script>
     window.dataLayer = window.dataLayer || [];
 
@@ -39,6 +37,7 @@
   <script src="./static/js/bulma-carousel.min.js"></script>
   <script src="./static/js/bulma-slider.min.js"></script>
   <script src="./static/js/index.js"></script>
+  <!-- <script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script> -->
 </head>
 <body>
 
@@ -97,7 +96,7 @@
               </span>
               <!-- Code Link. -->
               <span class="link-block">
-                <a href="https://github.com/ai-forever/KandinskyVideo"
+                <a href="https://github.com/ai-forever/KandinskyVideo1.1"
                    class="external-link button is-normal is-rounded is-dark">
                   <span class="icon">
                       <i class="fab fa-github"></i>
@@ -114,48 +113,23 @@
   </div>
 </section>
 
-<section class="hero is-small">
+<!-- <section class="hero is-small">
   <div class="columns is-centered has-text-centered">
     <div class="hero-body">
       <div class="container">
-      <!-- <div id="results-carousel" class="carousel results-carousel">
-        <div class="item item-steve">
-          <video poster="" id="steve" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/meduza.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-chair-tp">
-          <video poster="" id="chair-tp" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/fireplace.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-shiba">
-          <video poster="" id="shiba" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/explosion.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-fullbody">
-          <video poster="" id="fullbody" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/road.mp4"
-                    type="video/mp4">
-          </video>
-        </div>  
-      </div>
-    </div> -->
     	    <img src="./static/images/title.JPG"
     	    class="interpolation-image"
     	    alt="Interpolate start reference image."/>
             <p class="subtitle has-text-centered">
-              <b>Kandinsky Video</b> is a text-to-video generation model, which is based on the <a href="https://arxiv.org/abs/2311.13073"><b>FusionFrames</b></a> architecture and <a href="https://ai-forever.github.io/Kandinsky-3/"><b>Kandinsky 3.0</b></a> text-to-image model, consisting of two main stages - keyframe generation and interpolation.
+              <b>Kandinsky Video 1.1</b> is a text-to-video generation model, which is based on the <a href="https://arxiv.org/abs/2311.13073"><b>FusionFrames</b></a> 
+              architecture and <a href="https://ai-forever.github.io/Kandinsky-3/"><b>Kandinsky 3.0</b></a> text-to-image model, 
+              consisting of two main stages - keyframe generation and interpolation.
               Our approach for temporal conditioning allows us to generate videos with high-quality appearance, smoothness and dynamics.
             </p>
         </div>
       </div>
   </div>
-</section>
+</section> -->
 
 <!-- FusionFrames is a text-to-video generation model consisting of two main stages - keyframe generation and interpolation.  -->
 <!-- Our approach for temporal conditioning allows us to generate videos with high-quality appearance, smoothness and dynamics. -->
@@ -191,7 +165,7 @@
             class="interpolation-image"
             alt="Interpolate start reference image."/>
           <p>
-            The overall pipeline looks like:
+            The overall pipeline include following steps.
             <ol>
               <li>The generation of the first frame using textual prompt (Kandinsky 3.1).</li>
               <li>The generation of keyframes using the textual prompt and the previously 
@@ -208,31 +182,19 @@
         </div>
       </div>    
     </div>
-    <!--/ Matting. -->
 
       <div class="columns is-centered has-text-centered">
         <div class="column is-full-width">
-          <h2 class="title is-3">Motion score conditioning</h2>
+          <h2 class="title is-3">Motion score conditioning and Noise Augmentation</h2>
           <div class="content has-text-justified">
-            <img src="./static/images/motion_score.png"
+            <img src="./static/images/motion_score_noise_aug.gif"
             class="interpolation-image"
             alt="Interpolate start reference image."/>
           <p>
             Kandinsky Video 1.1 uses motion score as a condition to control dynamics in the video. 
             Motion score is calculated using the optical flow model (RAFT) while training. 
             During inference, we can manipulate motion score input to the model to obtain different dynamics in the generated video.
-          </p>
-          </div>
-        </div>    
-      </div>
-      <div class="columns is-centered has-text-centered">
-        <div class="column is-full-width">
-          <h2 class="title is-3">Video Frame Interpolation</h2>
-          <div class="content has-text-justified">
-            <img src="./static/images/motion_score_noise_aug.gif"
-            class="interpolation-image"
-            alt="Interpolate start reference image."/>
-          <p>
+
             Frames in video datasets suffer from quality issues like blur compared to the high quality images in image generation datasets. 
             In training, we use the first frame in the video as a condition to generate the rest of keyframes. 
             During inference, we generate the first frame using text to image model (Kandinsky 3.1). 
@@ -245,7 +207,7 @@
         </div>    
       </div>
     
-    <div class="columns is-centered has-text-centered">
+    <!-- <div class="columns is-centered has-text-centered">
       <div class="column is-full-width">
         <h2 class="title is-3">Results for temporal conditioning</h2>
         <div class="content has-text-justified">
@@ -345,7 +307,7 @@
         </div>    
       </div>
     </div>
-  </div>
+  </div> -->
 
 <hr>
 <section class="section" id="Acknowledgment">
@@ -353,7 +315,7 @@
     <h2 class="title">Acknowledgment</h2>
 
     The authors express great gratitude to Igor Pavlov, Anastasia Lysenko and Sergey Markov for their contribution in collecting and processing video data,
-     thanks to which this study became possible and Andrei Filatov for building the site.
+     thanks to which this study became possible.
 
 
   </div></section>
