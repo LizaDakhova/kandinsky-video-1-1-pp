@@ -169,11 +169,15 @@
         <h2 class="title is-3">Abstract</h2>
         <div class="content has-text-justified">
           <p>
-            Multimedia generation approaches occupy a prominent place in artificial intelligence research. Text-to-image models achieved high-quality results over the last few years. However, video synthesis methods recently started to develop. This paper presents a new two-stage latent diffusion
-text-to-video generation architecture based on the text-to-image diffusion model. The first stage concerns keyframes synthesis to figure the storyline of a video, while the second one is devoted to interpolation frames generation to make movements of the scene and objects smooth. We compare
-several temporal conditioning approaches for keyframes generation. The results show the advantage of using separate temporal blocks over temporal layers in terms of metrics reflecting video generation quality aspects and human preference. The design of our interpolation model significantly reduces 
-computational costs compared to other masked frame interpolation approaches. Furthermore, we evaluate different configurations of MoVQ-based video decoding scheme to improve consistency and achieve higher PSNR, SSIM, MSE, and LPIPS scores. Finally, we compare our pipeline with existing solutions 
-and achieve top-2 scores overall and top-1 among open-source solutions: CLIPSIM = 0.2976 and FVD = 433.054. 
+            In recent years, text-to-video models have made impressive strides in producing high-quality results. However, the architectural 
+            aspects of these models remain largely unexplored, as prior works use well-known approaches that offer minimal variation between 
+            models. Our work aims to address this gap by systematically exploring alternative options of text-to-video architecture building
+            blocks, specifically focusing on the temporal layer, frame interpolation model, and autoencoder. Firstly, we propose and compare 
+            various alternative temporal consistency modules, referred to as temporal blocks, which demonstrate improvements in generation 
+            quality metrics as well as in human evaluation. Secondly, we introduce a novel frame interpolation architecture that offers 
+            an inference speed boost over three times than of the standard Masked Frame interpolation approach. Finally, we evaluate 
+            different approaches for extending the MoVQ image autoencoder to the video domain. The experimental results show that 
+            the model with the proposed modifications strongly outperforms the model with classical blocks both quantitatively and qualitatively. 
           </p>
         </div>
       </div>
