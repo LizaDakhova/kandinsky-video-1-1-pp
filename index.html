@@ -163,13 +163,14 @@
 
 <section class="section hero is-light">
   <div class="container is-max-desktop">
-    <!-- Abstract. -->
+    <!-- Intro -->
     <div class="columns is-centered has-text-centered">
       <div class="column is-four-fifths">
-        <h2 class="title is-3">Abstract</h2>
+        <h2 class="title is-3">Intro</h2>
         <div class="content has-text-justified">
           <p>
-            In recent years, text-to-video models have made impressive strides in producing high-quality results. However, the architectural 
+
+            <!-- In recent years, text-to-video models have made impressive strides in producing high-quality results. However, the architectural 
             aspects of these models remain largely unexplored, as prior works use well-known approaches that offer minimal variation between 
             models. Our work aims to address this gap by systematically exploring alternative options of text-to-video architecture building
             blocks, specifically focusing on the temporal layer, frame interpolation model, and autoencoder. Firstly, we propose and compare 
@@ -177,7 +178,7 @@
             quality metrics as well as in human evaluation. Secondly, we introduce a novel frame interpolation architecture that offers 
             an inference speed boost over three times than of the standard Masked Frame interpolation approach. Finally, we evaluate 
             different approaches for extending the MoVQ image autoencoder to the video domain. The experimental results show that 
-            the model with the proposed modifications strongly outperforms the model with classical blocks both quantitatively and qualitatively. 
+            the model with the proposed modifications strongly outperforms the model with classical blocks both quantitatively and qualitatively.  -->
           </p>
         </div>
       </div>
@@ -192,11 +193,23 @@
       <div class="column is-full-width">
         <h2 class="title is-3">Overall Pipeline</h2>
         <div class="content has-text-justified">
-          <img src="./static/images/pipeline.jpg"
+          <img src="./static/images/pipeline.png"
             class="interpolation-image"
             alt="Interpolate start reference image."/>
           <p>
-            The encoded text prompt enters the U-Net keyframe generation model with temporal layers or blocks, and then the sampled latent keyframes are  sent to the latent interpolation model in such a way as to predict three interpolation frames between two keyframes. A temporal MoVQ-GAN decoder is used to get the final video result.
+            The overall pipeline looks like:
+            <ol>
+              <li>The generation of the first frame using textual prompt (Kandinsky 3.1).</li>
+              <li>The generation of keyframes using the textual prompt and the previously 
+                generated first frame as input. Additional inputs include motion score and noise 
+                augmentation level.</li>
+              <li>The generation of interpolated frames. Interpolation model in the new version 
+                uses additional temporal self-attention layers compared to the previous version 
+                which improves the visual quality of the interpolated frames.</li>
+              <li>Decode the generated video using Sber MoVQ-GAN.We inserted temporal layers in 
+                the decoder and fine tuned the decoder to ensure more consistent details among 
+                the generated frames.</li>
+            </ol>
           </p>
         </div>
       </div>    
