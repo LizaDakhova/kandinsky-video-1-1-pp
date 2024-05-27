@@ -163,7 +163,6 @@
 
 <section class="section hero is-light">
   <div class="container is-max-desktop">
-    <!-- Intro -->
     <div class="columns is-centered has-text-centered">
       <div class="column is-four-fifths">
         <h2 class="title is-3">Introduction</h2>
@@ -175,20 +174,10 @@
             Text to Image Kandinsky 3.0, and then generating the subsequent keyframes based on the textual prompt and the previously generated 
             first frame. This approach ensures more consistent content across the frames and significantly enhances the overall video quality. 
             Furthermore, the approach allows animating any input image as an additional feature.
-            <!-- In recent years, text-to-video models have made impressive strides in producing high-quality results. However, the architectural 
-            aspects of these models remain largely unexplored, as prior works use well-known approaches that offer minimal variation between 
-            models. Our work aims to address this gap by systematically exploring alternative options of text-to-video architecture building
-            blocks, specifically focusing on the temporal layer, frame interpolation model, and autoencoder. Firstly, we propose and compare 
-            various alternative temporal consistency modules, referred to as temporal blocks, which demonstrate improvements in generation 
-            quality metrics as well as in human evaluation. Secondly, we introduce a novel frame interpolation architecture that offers 
-            an inference speed boost over three times than of the standard Masked Frame interpolation approach. Finally, we evaluate 
-            different approaches for extending the MoVQ image autoencoder to the video domain. The experimental results show that 
-            the model with the proposed modifications strongly outperforms the model with classical blocks both quantitatively and qualitatively.  -->
           </p>
         </div>
       </div>
     </div>
-    <!--/ Abstract. -->
 
   </div>
 </section>
@@ -223,18 +212,15 @@
 
       <div class="columns is-centered has-text-centered">
         <div class="column is-full-width">
-          <h2 class="title is-3">Keyframes Generation with Temporal Conditioning </h2>
+          <h2 class="title is-3">Motion score conditioning</h2>
           <div class="content has-text-justified">
-            <img src="./static/images/temporal_layers_blocks.jpg"
+            <img src="./static/images/motion_score.png"
             class="interpolation-image"
             alt="Interpolate start reference image."/>
           <p>
-            We examined two approaches of temporal components use in pretrained architecture of T2I U-Net from Kandinsky 3.0 – the traditional approach of mixing spatial and temporal layers in one block (<b>left</b>) and our approach of allocating a separate temporal block (<b>middle</b>). 
-            All layers indicated in gray are not trained in T2V architectures and are initialized with the weights of the T2I Kandinsky 3.0 model. 
-            NA and N in the left corner of all layers correspond to the presence of prenormalization layers with and without activation, respectively. 
-            For different types of blocks we implemented different types of temporal attention and temporal convolution layers, (<b>left</b>). 
-            We also implement different types of temporal conditioning. One of them is simple conditioning when pixel see only itself value in different moments of type (1D layers). 
-            In 3D layers pixels can see the values of its neighbors also in different moments of time (<b>right</b>).
+            Kandinsky Video 1.1 uses motion score as a condition to control dynamics in the video. 
+            Motion score is calculated using the optical flow model (RAFT) while training. 
+            During inference, we can manipulate motion score input to the model to obtain different dynamics in the generated video.
           </p>
           </div>
         </div>    
@@ -243,15 +229,17 @@
         <div class="column is-full-width">
           <h2 class="title is-3">Video Frame Interpolation</h2>
           <div class="content has-text-justified">
-            <img src="./static/images/interpolation_ours.jpg"
+            <img src="./static/images/motion_score_noise_aug.gif"
             class="interpolation-image"
             alt="Interpolate start reference image."/>
           <p>
-            A summary of the primary changes made to the T2I architecture includes: 
-            (i) The input convolution now accepts three noisy latent inputs (interpolated frames) and two conditioning latent inputs (keyframes). 
-            (ii) The output convolution predicts three denoised latents.
-             (iii) Temporal convolutions have been introduced after each spatial convolution.
-
+            Frames in video datasets suffer from quality issues like blur compared to the high quality images in image generation datasets. 
+            In training, we use the first frame in the video as a condition to generate the rest of keyframes. 
+            During inference, we generate the first frame using text to image model (Kandinsky 3.1). 
+            This leads to training-inference mismatch and to mitigate this issue we employ noise augmentation. 
+            Too solve the problem, during training, we add different levels of noise to the first frame before passing it as a condition. 
+            In inference, after generating the first frame, we add a small amount of random noise to this frame 
+            and we pass the level of noise as an additional condition to the network.
           </p>
           </div>
         </div>    
@@ -268,7 +256,8 @@
           
         <p>
           We propose our approach for temporal conditioning based on separate temporal blocks. 
-          We compared three types of temporal blocks with temporal layers, which were commonly used in previous works, and gained the advantage of our approach in terms of frame quality, text alignment and temporal consistency.
+          We compared three types of temporal blocks with temporal layers, which were commonly used in previous works, 
+          and gained the advantage of our approach in terms of frame quality, text alignment and temporal consistency.
         </p>
         
         <div class="container">
